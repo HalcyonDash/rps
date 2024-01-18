@@ -5,36 +5,57 @@ let gameStatus = ""
 let playerScore = 0
 let computerScore = 0
 
+////////// UI //////////
+
+const main = document.querySelector("body");
+const container = document.createElement("div");
+const buttons = document.createElement("div");
+const btnRock = document.createElement("button");
+const btnPaper = document.createElement("button");
+const btnScissors = document.createElement("button");
+
+buttons.append(btnRock, btnPaper, btnScissors);
+btnRock.textContent = "Rock";
+btnPaper.textContent = "Paper";
+btnScissors.textContent = "Scissors";
+
+
+main.appendChild(container);
+main.appendChild(buttons);
+
+btnRock.addEventListener("click", () => {
+    playRound("rock");
+})
+btnPaper.addEventListener("click", () => {
+    playRound("paper");
+})
+btnScissors.addEventListener("click", () => {
+    playRound("scissors");
+})
+
+////////// GAME LOGIC //////////
+
+// gameStatus =  "Rock, Paper, or Scissors?"
+// playRound(playerChoice)
 game()
 
 function game() {
     gameStatus =  "Rock, Paper, or Scissors?"
+    container.textContent = gameStatus;
     playerScore = 0
     computerScore = 0
-    while (playerScore < 3 && computerScore < 3) {
-        playRound()
-    }
-
-    if (playerScore > computerScore) {
-        alert(gameStatus + "\nYou won the game! Press OK to play again.");
-    }
-    else if (playerScore < computerScore) {
-        alert(gameStatus + "\nYou lost the game. Press OK to play again.");
-    }
-    game()
 }
 
-function playRound() {
-    playerChoice = ""
+function playRound(playerChoice) {
+    console.log("Player chose " + playerChoice);
     computerChoice = getComputerChoice();
     console.log(computerChoice)
-    while (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors") {
-        playerChoice = prompt(gameStatus).toLowerCase()
-    }
+    // while (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors") {
+    //     playerChoice = prompt(gameStatus).toLowerCase()
+    // }
 
     if (computerChoice == playerChoice) {//draw
         gameStatus = "You both chose " + playerChoice + ". Play again." + getScore();
-        playRound();
     }
     else {
         switch(computerChoice) {
@@ -76,6 +97,8 @@ function playRound() {
                 break;
         }
     }
+    container.textContent = gameStatus;
+    checkWinner();
 }
 
 function getScore() {
@@ -88,13 +111,23 @@ function getScore() {
 }
 
 function getComputerChoice () {
-    switch(random(3)) {
+    switch(Math.floor(Math.random() * 3)) {
         case 0: return "rock";
         case 1: return "paper";
         case 2: return "scissors";
     }
 }
 
-function random(number) {
-    return Math.floor(Math.random() * number)
+function checkWinner() {
+    if (playerScore == 3) {
+        alert(gameStatus + "\nYou won the game! Press OK to play again.");
+        game();
+    }
+    else if (computerScore == 3) {
+        alert(gameStatus + "\nYou lost the game. Press OK to play again.");
+        game();
+    }
+    else { 
+        return
+    }
 }
