@@ -19,7 +19,6 @@ btnRock.textContent = "Rock";
 btnPaper.textContent = "Paper";
 btnScissors.textContent = "Scissors";
 
-
 main.appendChild(container);
 main.appendChild(buttons);
 
@@ -34,9 +33,6 @@ btnScissors.addEventListener("click", () => {
 })
 
 ////////// GAME LOGIC //////////
-
-// gameStatus =  "Rock, Paper, or Scissors?"
-// playRound(playerChoice)
 game()
 
 function game() {
@@ -49,10 +45,6 @@ function game() {
 function playRound(playerChoice) {
     console.log("Player chose " + playerChoice);
     computerChoice = getComputerChoice();
-    console.log(computerChoice)
-    // while (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors") {
-    //     playerChoice = prompt(gameStatus).toLowerCase()
-    // }
 
     if (computerChoice == playerChoice) {//draw
         gameStatus = "You both chose " + playerChoice + ". Play again." + getScore();
@@ -121,13 +113,12 @@ function getComputerChoice () {
 function checkWinner() {
     if (playerScore == 3) {
         alert(gameStatus + "\nYou won the game! Press OK to play again.");
-        game();
     }
     else if (computerScore == 3) {
         alert(gameStatus + "\nYou lost the game. Press OK to play again.");
-        game();
     }
     else { 
-        return
+        return;
     }
+    game();
 }
